@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Feed</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container-fluid">
+		<hr>
+		<!-- Riadok -->
+		<div class="row">
+			<!-- Ikona feedu/roomu -->
+			<div class="col-md-1 col-md-offset-2">
+				<img src="http://img3.wikia.nocookie.net/__cb20131004151520/logopedia/images/3/3a/Burger_King_Logo.svg" class="img-responsive img-circle"/>
+			</div>
+			<!-- Nazov feedu/roomu -->
+			<div class="col-md-5">
+				<h1>Dashboard </h1>
+			</div>
+		</div>
+		<hr>
+		<!-- Riadok -->
+		<div class="row">
+			<!-- Lavy stlpec -->
+			<div class="col-md-2">
+				<!-- Navigacia (zoznam feedov/roomov) -->
+				<ul id="room_list" class="nav nav-pills nav-stacked">
+					<li id="li_dashboard" class="active"><a href="#dashboard">Dashboard</a></li>
+				</ul>
+			</div>
+			<!-- Pravy stlpec -->
+			<div class="col-md-10">
+				<!-- Formular na novy Post -->
+				<div class="panel panel-default" id="new_post">
+				  <div class="panel-body">
+					<div class="form-group">
+						<textarea class="form-control new_text" placeholder="Pridať príspevok"></textarea>
+					</div>
+					<a href="" class="btn btn-primary new_send">Pridať</a>
+				  </div>
+				</div>
+				<!-- Feed -->
+				<div id="feed">
+					<!-- Post  -->
+					<div class="row feed_post">
+						<!-- Priestor pre Avatara -->
+						<div class="col-md-1">
+							<img src="http://png-4.findicons.com/files/icons/175/halloween_avatar/256/jack_skellington.png" class="img-responsive post_avatar"/>
+						</div>
+						<!-- Post -->
+						<div class="col-md-11">
+							<!-- Autor -->
+							<strong class="post_owner">Jozef Makový</strong>
+							<!-- Content -->
+							<div>
+								<p class="post_text">dnes sa mam fasa lebo som jedol mak.</p>
+							</div>
+							<!-- Like -->
+							<a href="" class="btn btn-default btn-xs post_like_click"><span class="glyphicon glyphicon-heart"></span> <span class="post_like">2</span></a>
+							<!-- Pridaj Comment -->
+							<a href="" class="btn btn-default btn-xs post_add_comment"><span class="glyphicon glyphicon-comment"></span> Pridať komentár</a>
+							<hr/>
+							<!-- Pre Commenty zopakujeme strukturu postu tak ako v Post 1 -->
+							<div class="row post_messages">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+	<script>
+	
+	function onhashchangeWrap(fn){
+		var msie = /msie/.test(navigator.userAgent.toLowerCase());
+		if (window.onhashchange && !msie) {
+			$(window).bind('hashchange',function(e) { fn(window.location.hash); });
+		}
+		else {
+			var prevHash = window.location.hash;
+			window.setInterval(function () {
+				if (window.location.hash != prevHash) {
+					prevHash = window.location.hash;
+					fn(window.location.hash);
+				}
+			}, 100);
+		}
+	}
+	
+	$( document ).ready(function(){ 
+		console.log( "ready!" );
+		window.roomManagerInstance = new RoomMnager();
+		window.roomManagerInstance.callUserInfo();
+		window.roomManagerInstance.showRoom('#dashboard');
+		onhashchangeWrap(function(hash){
+			window.roomManagerInstance.showRoom(hash);
+		});
+	});
+	
+	</script>
+  </body>
+</html>
